@@ -158,7 +158,7 @@ fun isHibernationEnabled(): Boolean {
         DeviceConfig.getBoolean(
             NAMESPACE_APP_HIBERNATION,
             Utils.PROPERTY_APP_HIBERNATION_ENABLED,
-            true, /* defaultValue */
+            false, /* defaultValue */
         )
 }
 
@@ -1199,7 +1199,7 @@ object HibernationEnabledLiveData : MutableLiveData<Boolean>() {
                 DeviceConfig.getBoolean(
                     NAMESPACE_APP_HIBERNATION,
                     Utils.PROPERTY_APP_HIBERNATION_ENABLED,
-                    true, /* defaultValue */
+                    false, /* defaultValue */
                 )
         )
         DeviceConfig.addOnPropertiesChangedListener(
@@ -1210,7 +1210,7 @@ object HibernationEnabledLiveData : MutableLiveData<Boolean>() {
                     if (key == Utils.PROPERTY_APP_HIBERNATION_ENABLED) {
                         value =
                             SdkLevel.isAtLeastS() &&
-                                properties.getBoolean(key, true /* defaultValue */)
+                                properties.getBoolean(key, false /* defaultValue */)
                         break
                     }
                 }
