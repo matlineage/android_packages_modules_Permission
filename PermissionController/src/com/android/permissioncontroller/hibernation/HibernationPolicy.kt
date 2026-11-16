@@ -154,12 +154,7 @@ private const val ACTION_SET_UP_HIBERNATION =
 val ONE_DAY_MS = TimeUnit.DAYS.toMillis(1)
 
 fun isHibernationEnabled(): Boolean {
-    return SdkLevel.isAtLeastS() &&
-        DeviceConfig.getBoolean(
-            NAMESPACE_APP_HIBERNATION,
-            Utils.PROPERTY_APP_HIBERNATION_ENABLED,
-            false, /* defaultValue */
-        )
+    return false
 }
 
 /**
@@ -1194,27 +1189,6 @@ class ExemptServicesLiveData(private val user: UserHandle) :
 /** Live data for whether the hibernation feature is enabled or not. */
 object HibernationEnabledLiveData : MutableLiveData<Boolean>() {
     init {
-        postValue(
-            SdkLevel.isAtLeastS() &&
-                DeviceConfig.getBoolean(
-                    NAMESPACE_APP_HIBERNATION,
-                    Utils.PROPERTY_APP_HIBERNATION_ENABLED,
-                    false, /* defaultValue */
-                )
-        )
-        DeviceConfig.addOnPropertiesChangedListener(
-            NAMESPACE_APP_HIBERNATION,
-            PermissionControllerApplication.get().mainExecutor,
-            { properties ->
-                for (key in properties.keyset) {
-                    if (key == Utils.PROPERTY_APP_HIBERNATION_ENABLED) {
-                        value =
-                            SdkLevel.isAtLeastS() &&
-                                properties.getBoolean(key, false /* defaultValue */)
-                        break
-                    }
-                }
-            },
-        )
+        postValue(false)
     }
 }
